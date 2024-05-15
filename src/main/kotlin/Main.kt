@@ -51,19 +51,9 @@ fun parseMatrix(input: String): Matrix? {
     val matrix = mutableListOf<List<Double>>()
 
     for (row in rows) {
-        val numbers = row.split(" ")
-        val numberList = mutableListOf<Double>()
+        val numberList = row.split(" ").mapNotNull { it.toDoubleOrNull() }
 
-        for (number in numbers) {
-            val num = number.toDoubleOrNull()
-            if (num == null) {
-                return null
-            } else {
-                numberList.add(num)
-            }
-        }
-
-        if (matrix.isNotEmpty() && matrix[0].size != numberList.size) {
+        if (numberList.isEmpty() || (matrix.isNotEmpty() && matrix[0].size != numberList.size)) {
             return null
         }
 
