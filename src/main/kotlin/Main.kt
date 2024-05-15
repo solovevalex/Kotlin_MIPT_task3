@@ -47,20 +47,11 @@ fun main(args: Array<String>) {
 }
 
 fun parseMatrix(input: String): Matrix? {
-    val rows = input.split(";")
-    val matrix = mutableListOf<List<Double>>()
-
-    for (row in rows) {
-        val numberList = row.split(" ").mapNotNull { it.toDoubleOrNull() }
-
-        if (numberList.isEmpty() || (matrix.isNotEmpty() && matrix[0].size != numberList.size)) {
-            return null
-        }
-
-        matrix.add(numberList)
+    val rows = input.split(";").map { it.split(" ").mapNotNull { num -> num.toDoubleOrNull() } }
+    if (rows.any { it.size != rows[0].size }) {
+        return null
     }
-
-    return Matrix(matrix)
+    return Matrix(rows)
 }
 
 fun printMatrix(matrix: Matrix) {
